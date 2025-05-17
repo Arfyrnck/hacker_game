@@ -650,20 +650,47 @@
       background: rgba(0, 255, 0, 0.05);
       border: 1px solid var(--primary-color);
       border-radius: 4px;
+      font-family: 'Fira Code', monospace;
     }
 
     .file-item {
       padding: 4px 8px;
-      font-family: 'Fira Code', monospace;
       color: var(--text-color);
       display: flex;
       align-items: center;
       gap: 8px;
+      border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+    }
+
+    .file-item:last-child {
+      border-bottom: none;
+    }
+
+    .file-item[data-type="directory"] {
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+
+    .file-item[data-type="file"] {
+      color: var(--text-color);
     }
 
     .file-item:hover {
       background: rgba(0, 255, 0, 0.1);
       cursor: pointer;
+    }
+    
+    .info-text {
+      color: var(--warning-color);
+      margin: 5px 0;
+      padding: 5px;
+      font-style: italic;
+    }
+
+    .hint-text {
+      color: var(--warning-color);
+      font-style: italic;
+      font-size: 0.9em;
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
@@ -692,7 +719,7 @@
       <div class="progress-bar-fill"></div>
     </div>
   </div>
-  <div class="current-task">Görev 1/7</div>
+  <div class="current-task">Görev 0/7</div>
 </div>
 
 <div class="hacked-profs">
@@ -783,24 +810,40 @@ document.addEventListener("DOMContentLoaded", function () {
       yanıt: "SSH bağlantısı kuruldu.  [✔]"
     },
     {
-      soru: ">> GÖREV #5: Hedef cihazda sınav notları dosyasını bulmak için dizinleri gezin.\n>> İpucu: cd ve ls komutlarını kullanarak /home/t.timucin dizininden başlayıp dosyayı bulun.",
-      cevap: "cd /home/t.timucin/documents",
-      yanıt: "Dizine girildi. Dosyalar listeleniyor:\n\n📁 organizasyon_vize.txt\n📁 ders_notlari/\n📁 odevler/\n📁 sinav_sorulari/\n📁 projeler/\n📁 gizli_belgeler/\n\nİpucu: Doğru dosyayı bulmak için dosya isimlerine dikkat edin!",
-      allowedCommands: ["cd", "ls"],
+      soru: ">> GÖREV #5: Hedef cihazda sınav notları dosyasını bulmak için:\n>> 1. Önce 'ls' komutu ile dosyaları listele\n>> 2. Sonra 'cd Documents' komutu ile Documents dizinine gir\n>> 3. Tekrar 'ls' yazarak dosyaları listele\n>> 4. Son olarak 'nano organizasyon_vize.txt' yazarak dosyayı aç\n>> Başlangıç konumu: /home/t.timucin",
+      cevap: "nano organizasyon_vize.txt",
+      yanıt: "Dosya başarıyla bulundu! Editör açılıyor... [✔]",
+      allowedCommands: ["cd", "ls", "nano"],
       directories: {
-        "/home": ["t.timucin"],
-        "/home/t.timucin": ["Desktop", "Documents", "Downloads", "Pictures"],
-        "/home/t.timucin/Documents": ["organizasyon_vize.txt", "ders_notlari", "odevler", "sinav_sorulari", "projeler", "gizli_belgeler"],
-        "/home/t.timucin/Desktop": ["shortcuts.lnk"],
-        "/home/t.timucin/Downloads": ["chrome_installer.exe"],
-        "/home/t.timucin/Pictures": ["avatar.jpg"]
+        "/home/t.timucin": ["Desktop", "Documents (Sınav notları burada olabilir)", "Downloads", "Pictures"],
+        "/home/t.timucin/Documents": ["organizasyon_vize.txt (Sınav notları dosyası)", "odevler", "notlar"],
+        "Documents": ["organizasyon_vize.txt (Sınav notları dosyası)", "odevler", "notlar"],
+        "documents": ["organizasyon_vize.txt (Sınav notları dosyası)", "odevler", "notlar"]  // Add lowercase variant
       },
-      currentPath: "/home/t.timucin"
+      currentPath: "/home/t.timucin",
+      fileFound: false,
+      lsUsed: false,
+      cdDocuments: false,
+      documentsLsUsed: false // New flag to track ls usage in Documents directory
     },
     {
-      soru: ">> GÖREV #6: organizasyonvize.txt dosyasını terminal editörüyle açın, 6 öğrencinin notlarını güncelleyin, kaydedip çıkın.",
-      cevap: "nano /home/t.timucin/Documents/organizasyon_vize.txt",
-      yanıt: "Editör açıldı; notlar güncellendi ve dosya kaydedilip kapatıldı.  [✔]",
+      soru: ">> GÖREV #6: Sınav notlarını güncelleyelim!\n\n📝 Yapılacaklar:\n1. Açılan editörde öğrenci notlarını göreceksiniz\n2. Notları değiştirmek için klavyeyi kullanabilirsiniz\n3. Değişiklikleri kaydetmek için CTRL+O tuşlarına basın\n4. Editörden çıkmak için CTRL+X tuşlarına basın\n\n⚠️ Not: Editör içinde yön tuşlarıyla hareket edebilirsiniz",
+      cevap: "CTRL+X",
+      yanıt: "Notlar başarıyla güncellendi ve kaydedildi! [✔]",
+      editorContent: `# Organizasyon Vize Notları
+# Dosya: /home/t.timucin/Documents/organizasyon_vize.txt
+
+# Öğrenci Notları:
+1. Ali Yılmaz=65  
+2. Ayşe Demir=72  
+3. Mehmet Kaya=58  
+4. Zeynep Şahin=85  
+5. Can Öztürk=70  
+6. Deniz Yıldız=63  
+# ... diğer notlar ...
+
+# Not: Notları güncellemek için sayıları değiştirin
+# Kaydetmek için CTRL+O, çıkmak için CTRL+X tuşlarına basın`,
       editorContent: `# Organizasyon Vize Notları
 # Dosya: /home/t.timucin/Documents/organizasyon_vize.txt
 
@@ -855,8 +898,8 @@ document.addEventListener("DOMContentLoaded", function () {
       editorMode: true
     },
     {
-      soru: ">> GÖREV #7: Hedef cihazdaki sadece t.timucin oturum kayıtlarını log dosyalarından silmek için doğru komutu gir.\n>> Komut: ______",
-      cevap: "'/t\\.timucin/d' /var/log/auth.log /var/log/secure",
+      soru: ">> GÖREV #7: Hedef cihazdaki sadece t.timucin oturum kayıtlarını log dosyalarından silmek için doğru komutu gir.\n>> Komut: sed ________ ________ ________",
+      cevap: "sed '/t\\.timucin/d' /var/log/auth.log /var/log/secure",
       yanıt: "Yalnızca 't.timucin' kayıtları silindi; diğer loglar dokunulmadı.  [✔]"
     }
   ];
@@ -1203,8 +1246,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const editorDiv = document.createElement('div');
     editorDiv.className = 'nano-editor';
     editorDiv.innerHTML = `
-      <div class="editor-header">GNU nano 6.2</div>
+      <div class="editor-header">
+        <span>GNU nano 6.2</span>
+        <span class="file-info">File: /home/t.timucin/Documents/organizasyon_vize.txt</span>
+      </div>
       <div class="editor-content" contenteditable="true" spellcheck="false"></div>
+      <div class="editor-instructions">
+        <div class="instruction-item">💡 Yön tuşlarıyla hareket edin</div>
+        <div class="instruction-item">💾 CTRL+O ile kaydedin</div>
+        <div class="instruction-item">❌ CTRL+X ile çıkın</div>
+      </div>
       <div class="editor-footer">
         <span>^G Yardım</span>
         <span>^O Kaydet</span>
@@ -1218,11 +1269,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const editorContent = editorDiv.querySelector('.editor-content');
     editorContent.textContent = content;
     
-    // Editör modunu aktifleştir
+    // Activate editor mode
     isEditorMode = true;
     currentEditorContent = content;
     
-    // Editör stillerini güncelle
+    // Add editor styles
     const style = document.createElement('style');
     style.textContent = `
       .nano-editor {
@@ -1232,23 +1283,48 @@ document.addEventListener("DOMContentLoaded", function () {
         padding: 5px;
         font-family: 'Fira Code', monospace;
       }
+      
       .editor-header {
         color: var(--primary-color);
         border-bottom: 1px solid var(--primary-color);
         padding: 5px;
         margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
       }
+      
+      .file-info {
+        color: var(--warning-color);
+      }
+      
       .editor-content {
         white-space: pre;
-        padding: 5px;
-        min-height: 200px;
+        padding: 10px;
+        min-height: 300px;
         color: var(--text-color);
         outline: none;
         caret-color: var(--primary-color);
+        line-height: 1.4;
       }
+      
       .editor-content:focus {
         box-shadow: 0 0 5px var(--primary-color);
       }
+      
+      .editor-instructions {
+        padding: 10px;
+        background: rgba(0, 255, 0, 0.1);
+        border: 1px solid var(--primary-color);
+        margin: 10px 0;
+        border-radius: 4px;
+      }
+      
+      .instruction-item {
+        color: var(--warning-color);
+        margin: 5px 0;
+        font-size: 0.9em;
+      }
+      
       .editor-footer {
         border-top: 1px solid var(--primary-color);
         padding: 5px;
@@ -1259,25 +1335,42 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
     document.head.appendChild(style);
 
-    // Editör içeriğini güncelle
+    // Handle editor keyboard events
     editorContent.addEventListener('input', (e) => {
       currentEditorContent = e.target.textContent;
     });
 
-    // CTRL+O ve CTRL+X kısayollarını ekle
     editorContent.addEventListener('keydown', (e) => {
       if (e.ctrlKey) {
         if (e.key === 'o') {
           e.preventDefault();
           saveFile();
+          const saveMsg = document.createElement('div');
+          saveMsg.className = 'success-text';
+          saveMsg.innerHTML = '💾 Dosya başarıyla kaydedildi!';
+          terminal.appendChild(saveMsg);
         } else if (e.key === 'x') {
           e.preventDefault();
           exitEditor();
+          const exitMsg = document.createElement('div');
+          exitMsg.className = 'success-text';
+          exitMsg.innerHTML = '✨ Editör kapatıldı. Değişiklikler kaydedildi.';
+          terminal.appendChild(exitMsg);
+          
+          // Show next task if available
+          görevIndex++;
+          updateTaskStatus();
+          if (görevIndex < görevler.length) {
+            const nextTaskDiv = document.createElement('div');
+            nextTaskDiv.innerHTML = görevler[görevIndex].soru;
+            nextTaskDiv.className = 'task-container';
+            terminal.appendChild(nextTaskDiv);
+          }
         }
       }
     });
 
-    // Editöre odaklan
+    // Focus on editor
     editorContent.focus();
   }
 
@@ -1295,21 +1388,19 @@ document.addEventListener("DOMContentLoaded", function () {
       editorDiv.remove();
     }
     
-    const completeDiv = document.createElement('div');
-    completeDiv.innerHTML = 'Editör kapatıldı. Değişiklikler kaydedildi.';
-    completeDiv.className = 'success-text';
-    terminal.appendChild(completeDiv);
+    // Show success message for Task 6
+    const successDiv = document.createElement('div');
+    successDiv.innerHTML = görevler[görevIndex].yanıt;
+    successDiv.className = 'success-text';
+    terminal.appendChild(successDiv);
     
-    // Görevi tamamla
-    görevIndex++;
-    updateTaskStatus();
+    // Show Task 7 without incrementing görevIndex or updating progress
+    const nextTaskDiv = document.createElement('div');
+    nextTaskDiv.innerHTML = görevler[6].soru;
+    nextTaskDiv.className = 'task-container';
+    terminal.appendChild(nextTaskDiv);
     
-    if (görevIndex < görevler.length) {
-      const nextTaskDiv = document.createElement('div');
-      nextTaskDiv.innerHTML = görevler[görevIndex].soru;
-      nextTaskDiv.className = 'task-container';
-      terminal.appendChild(nextTaskDiv);
-    }
+    terminal.scrollTop = terminal.scrollHeight;
   }
 
   // Parola kırma animasyonu için yeni fonksiyon
@@ -1397,7 +1488,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Görev durumu güncelleme
   function updateTaskStatus() {
-    const progress = ((görevIndex) / görevler.length) * 100;
+    const progress = (görevIndex / görevler.length) * 100;
     const progressBarFill = document.querySelector('.progress-bar-fill');
     const currentTask = document.querySelector('.current-task');
     
@@ -1409,16 +1500,16 @@ document.addEventListener("DOMContentLoaded", function () {
       currentTask.textContent = `Görev ${görevIndex}/${görevler.length}`;
     }
 
-    // Tüm görevler tamamlandığında tebrik mesajı göster ve sayacı durdur
-    if (görevIndex >= görevler.length) {
-      clearInterval(timerInterval); // Timer'ı durdur
+    // Only show congratulations after Task 7 is completed successfully
+    if (görevIndex >= görevler.length && veri > 0) {
+      clearInterval(timerInterval);
       const congratsDiv = document.createElement('div');
       congratsDiv.className = 'success-text';
       congratsDiv.innerHTML = `
         <div style="text-align: center; margin: 20px 0;">
           <h2 style="color: #00FF00; text-shadow: 0 0 10px #00FF00;">🎉 TEBRİKLER! 🎉</h2>
-          <p style="font-size: 1.2em;">Aferin ucuz yırttın! Tüm görevleri başarıyla tamamladın!</p>
-          <p style="font-size: 1.1em;">🔥 Sistem güvenliğini tamamen çökerttin ve tüm verileri ele geçirdin! 🔥</p>
+          <p style="font-size: 1.2em;">Tüm görevleri başarıyla tamamladın!</p>
+          <p style="font-size: 1.1em;">🔥 Sistem güvenliğini tamamen çökerttin! 🔥</p>
           <p style="font-size: 1.1em;">Kalan süre: ${Math.floor(kalanSaniye / 60)}:${(kalanSaniye % 60).toString().padStart(2, '0')}</p>
           <p style="font-size: 1.1em;">Kalan veri: ${veri}</p>
         </div>
@@ -1436,16 +1527,23 @@ document.addEventListener("DOMContentLoaded", function () {
     const aktifGörev = görevler[görevIndex];
     if (!aktifGörev || !aktifGörev.directories) return;
 
-    const normalizedPath = path.toLowerCase().replace(/\\/g, '/');
-    const contents = aktifGörev.directories[normalizedPath];
+    // Normalize path handling
+    let normalizedPath = path.toLowerCase().replace(/\\/g, '/');
+    
+    // Check both the full path and the simple directory name
+    let contents = aktifGörev.directories[normalizedPath] || 
+                  aktifGörev.directories[normalizedPath.split('/').pop()] ||
+                  aktifGörev.directories['/home/t.timucin/Documents'];
     
     if (contents) {
       const contentDiv = document.createElement('div');
       contentDiv.className = 'directory-listing';
       contentDiv.innerHTML = contents.map(item => {
         const isDirectory = !item.includes('.');
-        return `<div class="file-item">
-          ${isDirectory ? '📁' : '📄'} ${item}${isDirectory ? '/' : ''}
+        const icon = isDirectory ? '📁' : '📄';
+        const name = item.replace(/\s*\([^)]*\)/, '');
+        return `<div class="file-item" data-type="${isDirectory ? 'directory' : 'file'}">
+          ${icon} ${name}${isDirectory ? '/' : ''}
         </div>`;
       }).join('\n');
       terminal.appendChild(contentDiv);
@@ -1453,7 +1551,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       const errorDiv = document.createElement('div');
       errorDiv.className = 'error-text';
-      errorDiv.textContent = 'Dizin bulunamadı.';
+      errorDiv.textContent = 'Dizin bulunamadı. "ls" komutu ile mevcut dizindeki dosyaları listeleyin.';
       terminal.appendChild(errorDiv);
       terminal.scrollTop = terminal.scrollHeight;
     }
@@ -1491,26 +1589,116 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Görev 5 için özel kontrol
       if (aktifGörev && görevIndex === 4) {
-        if (komut.startsWith('cd ')) {
-          const path = komut.substring(3);
-          if (path.toLowerCase() === '/home/t.timucin/documents') {
-            showDirectoryContents('/home/t.timucin/Documents');
-            // Görev tamamlandı, devam et...
+        if (!aktifGörev.allowedCommands.includes(komut.split(' ')[0])) {
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'error-text';
+          errorDiv.innerHTML = `❌ Geçersiz komut! Kullanabileceğiniz komutlar: ${aktifGörev.allowedCommands.join(', ')}`;
+          terminal.appendChild(errorDiv);
+          veri--;
+          güncelleVeri();
+          return;
+        }
+
+        if (komut === 'ls') {
+          const pathDiv = document.createElement('div');
+          pathDiv.className = 'info-text';
+          pathDiv.innerHTML = `📂 Mevcut konum: ${aktifGörev.currentPath}`;
+          terminal.appendChild(pathDiv);
+          
+          showDirectoryContents(aktifGörev.currentPath);
+          aktifGörev.lsUsed = true;
+          if (aktifGörev.currentPath === '/home/t.timucin/Documents') {
+            aktifGörev.documentsLsUsed = true;
+          }
+          return;
+        } 
+        else if (komut.startsWith('cd ')) {
+          if (!aktifGörev.lsUsed) {
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'warning-text';
+            warningDiv.innerHTML = '⚠️ İpucu: Önce "ls" komutu ile dosyaları listeleyin!';
+            terminal.appendChild(warningDiv);
+            return;
+          }
+
+          const targetPath = komut.substring(3).trim().toLowerCase();
+          if (targetPath === 'documents' || targetPath === '/home/t.timucin/documents') {
+            aktifGörev.currentPath = '/home/t.timucin/Documents';
+            aktifGörev.cdDocuments = true;
+            aktifGörev.documentsLsUsed = false; // Reset ls flag for Documents directory
+            const successDiv = document.createElement('div');
+            successDiv.innerHTML = `📂 Documents dizinine girildi.`;
+            successDiv.className = 'success-text';
+            terminal.appendChild(successDiv);
+          } else {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-text';
+            errorDiv.innerHTML = `
+              ❌ Yanlış dizin. 
+              💡 İpucu: Sınav notlarının Documents dizininde olduğu söylendi.
+              📝 Kullanın: cd Documents
+            `;
+            terminal.appendChild(errorDiv);
+            veri--;
+            güncelleVeri();
+          }
+          return;
+        }
+        else if (komut.startsWith('nano ')) {
+          if (!aktifGörev.cdDocuments) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-text';
+            errorDiv.innerHTML = `
+              ❌ Yanlış dizin! 
+              💡 İpucu: Önce "cd Documents" ile Documents dizinine gitmelisiniz.
+            `;
+            terminal.appendChild(errorDiv);
+            veri--;
+            güncelleVeri();
+            return;
+          }
+
+          if (!aktifGörev.documentsLsUsed) {
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'warning-text';
+            warningDiv.innerHTML = '⚠️ İpucu: Documents dizinine girdikten sonra "ls" komutu ile dosyaları listelemelisiniz!';
+            terminal.appendChild(warningDiv);
+            veri--;
+            güncelleVeri();
+            return;
+          }
+
+          const fileName = komut.substring(5).trim().toLowerCase();
+          if (fileName === 'organizasyon_vize.txt' && aktifGörev.currentPath === '/home/t.timucin/Documents') {
             const successDiv = document.createElement('div');
             successDiv.innerHTML = aktifGörev.yanıt;
             successDiv.className = 'success-text';
             terminal.appendChild(successDiv);
+            
+            // Transition to Task 6 and show editor
             görevIndex++;
             updateTaskStatus();
+            
+            // Show new task description
+            const taskDiv = document.createElement('div');
+            taskDiv.innerHTML = görevler[görevIndex].soru;
+            taskDiv.className = 'task-container';
+            terminal.appendChild(taskDiv);
+            
+            // Open editor with content
+            showNanoEditor(görevler[görevIndex].editorContent);
           } else {
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error-text';
-            errorDiv.textContent = 'Yanlış dizin. Doğru dizini bulmaya çalış!';
+            errorDiv.innerHTML = `
+              ❌ Dosya bulunamadı! 
+              💡 İpucu: "ls" ile dosyaları listeleyin ve doğru dosya adını kullanın.
+              📝 Doğru dosya adı: organizasyon_vize.txt
+            `;
             terminal.appendChild(errorDiv);
+            veri--;
+            güncelleVeri();
           }
-          return;
-        } else if (komut === 'ls') {
-          showDirectoryContents(aktifGörev.currentPath);
           return;
         }
       }
@@ -1615,8 +1803,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const sn = String(kalanSaniye % 60).padStart(2, '0');
     timerEl.textContent = `${dk}:${sn}`;
 
+    // Update progress bar
     const oran = kalanSaniye / (10 * 60);
     progressBar.style.width = `${oran * 100}%`;
+    
+    // Update timer colors based on remaining time
     if (oran < 0.2) {
       progressBar.style.background = "red";
       timerEl.style.color = "red";
@@ -1627,42 +1818,7 @@ document.addEventListener("DOMContentLoaded", function () {
       progressBar.style.background = "limegreen";
       timerEl.style.color = "#00FF00";
     }
-  }, 1000);
-
-  // Komut ipuçlarını göster
-  function showCommandHints(input) {
-    const hintsEl = document.getElementById('commandHints');
-    const value = input.value.toLowerCase();
-    
-    if (value.length < 2) {
-      hintsEl.classList.remove('visible');
-      return;
-    }
-
-    const matches = Object.entries(commandHints)
-      .filter(([cmd, hint]) => cmd.toLowerCase().includes(value))
-      .map(([cmd, hint]) => `<div class="hint-item" data-cmd="${cmd}">${cmd} - ${hint}</div>`)
-      .join('');
-
-    if (matches) {
-      hintsEl.innerHTML = matches;
-      hintsEl.classList.add('visible');
-    } else {
-      hintsEl.classList.remove('visible');
-    }
-  }
-
-  // Event Listeners
-  input.addEventListener('input', (e) => {
-    showCommandHints(e.target);
-  });
-
-  document.getElementById('commandHints').addEventListener('click', (e) => {
-    if (e.target.classList.contains('hint-item')) {
-      input.value = e.target.dataset.cmd;
-      document.getElementById('commandHints').classList.remove('visible');
-    }
-  });
+  }, 1000); // Run every 1000ms (1 second)
 });
 </script>
 </body>

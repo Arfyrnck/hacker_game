@@ -1,64 +1,78 @@
-# Hacker Terminal Simülasyonu
+# Hacker Terminal Simülasyonu 🖥️
 
-Bu proje, kullanıcıların hacker deneyimini simüle eden interaktif bir web uygulamasıdır. Kullanıcılar, çeşitli görevleri tamamlayarak sistem güvenliğini test etmeyi öğrenirler.
+Gerçekçi bir hacker deneyimi sunan interaktif terminal simülasyonu. Kullanıcılar, çeşitli siber güvenlik görevlerini belirli bir süre içinde tamamlamaya çalışırken, veri sızıntılarını önlemeye çalışır.
 
-## Özellikler
+## 🎯 Özellikler
 
-- 🎯 7 farklı zorluk seviyesinde görev
-- ⏱️ 10 dakikalık süre sınırı
-- 📊 5 farklı veri türü (WhatsApp, Instagram, Galeri, Rehber, Banka)
-- 💡 Her görev için ipucu sistemi (2 ipucu = 1 veri sızıntısı)
-- 🎮 Gerçekçi terminal arayüzü
-- 🔍 Otomatik komut tamamlama
-- 📝 Nano editör simülasyonu
-- 🔑 Parola kırma animasyonu
-- 🌟 Matrix efekti
+- **7 Farklı Görev**: Her biri gerçek dünya senaryolarına dayalı
+- **Süre Sınırı**: 10 dakika içinde tamamlanması gereken görevler
+- **Veri Koruma**: 5 kritik veri türü (WhatsApp, Instagram, Galeri, Rehber, Banka)
+- **İpucu Sistemi**: Her görev için kullanılabilir ipuçları
+- **Gerçekçi Arayüz**: Terminal benzeri kullanıcı arayüzü
+- **Özel Efektler**: Matrix tarzı animasyonlar ve terminal efektleri
 
-## Nasıl Oynanır
+## 🎮 Oynanış
 
-1. Terminal penceresinde size verilen görevleri okuyun
-2. Doğru komutları girerek görevleri tamamlayın
-3. İpucu almak için `ipucu` komutunu kullanın (dikkat: her 2 ipucu 1 veri kaybına neden olur)
-4. Yanlış komutlar veri sızıntısına neden olur
-5. Tüm veriler sızdırılmadan ve süre dolmadan görevleri tamamlamaya çalışın
+1. Terminal ekranında verilen görevleri dikkatlice okuyun
+2. Doğru komutları kullanarak görevleri tamamlayın
+3. Gerektiğinde `ipucu` komutunu kullanın (Dikkat: Her 2 ipucu 1 veri kaybına neden olur)
+4. Yanlış komutlardan kaçının (Her yanlış komut 1 veri sızıntısına neden olur)
+5. Tüm görevleri veriler sızmadan ve süre dolmadan tamamlamaya çalışın
 
-## Komutlar
+## ⌨️ Temel Komutlar
 
-- `ipucu`: Mevcut görev için ipucu alır
-- `görevi tekrar et`: Mevcut görevi tekrar gösterir
-- Tab tuşu: Komut önerilerini gösterir
-- Yukarı/Aşağı ok tuşları: Komut geçmişinde gezinir
+| Komut | Açıklama |
+|-------|----------|
+| `ipucu` | Mevcut görev için ipucu gösterir |
+| `görevi tekrar et` | Aktif görevi tekrar görüntüler |
+| `Tab` | Komut önerilerini listeler |
+| `↑/↓` | Komut geçmişinde gezinir |
+| `Ctrl + G` | Aktif görevi otomatik doldurur |
 
-## Teknik Detaylar
+## 🛠️ Teknik Özellikler
 
-- HTML5, CSS3 ve JavaScript kullanılarak geliştirilmiştir
-- Font Awesome ikonları kullanılmıştır
-- Fira Code yazı tipi kullanılmıştır
-- Responsive tasarım
-- Modern terminal efektleri
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Yazı Tipi**: Fira Code (monospace)
+- **İkonlar**: Font Awesome
+- **Özellikler**:
+  - Responsive tasarım
+  - Otomatik komut tamamlama
+  - Nano editör simülasyonu
+  - Parola kırma animasyonu
+  - Matrix arka plan efekti
 
-## Kurulum
+## 📥 Kurulum
 
-1. Projeyi klonlayın
-2. `index.html` dosyasını bir web tarayıcısında açın
-3. Tam ekran modunda oynamak için önerilir
+1. Repoyu klonlayın:
+   ```bash
+   git clone https://github.com/kullaniciadi/hacker-terminal.git
+   ```
+2. Proje dizinine gidin:
+   ```bash
+   cd hacker-terminal
+   ```
+3. `index.html` dosyasını modern bir web tarayıcısında açın
+4. Tam ekran (F11) modunda oynamanız önerilir
 
-## Geliştirici Notları
+## 📊 Oyun Mekanikleri
 
-- Oyun süresi: 10 dakika
-- Başlangıç veri sayısı: 5
-- Her yanlış komut 1 veri kaybına neden olur
-- Her 2 ipucu kullanımı 1 veri kaybına neden olur
-- Tüm veriler sızdırıldığında veya süre dolduğunda oyun sonlanır
-- Her sayfa yenilendiğinde komut geçmişi sıfırlanır
-- CTRL + G tuşu ile aktif görevi otomatik doldurma
+- **Süre**: 10 dakika
+- **Başlangıç Veri Sayısı**: 5
+- **Veri Kaybı Koşulları**:
+  - Her yanlış komut: -1 veri
+  - Her 2 ipucu kullanımı: -1 veri
+- **Oyun Sonu Koşulları**:
+  - Tüm verilerin sızması
+  - Sürenin dolması
+  - Tüm görevlerin başarıyla tamamlanması
 
-## Güvenlik Uyarısı
+## ⚠️ Yasal Uyarı
 
-Bu simülasyon sadece eğitim amaçlıdır. Gerçek sistemler üzerinde izinsiz denemeler yapmak yasalara aykırıdır.
+Bu simülasyon yalnızca eğitim amaçlıdır. Gerçek sistemler üzerinde izinsiz penetrasyon testleri veya sızma girişimleri yasalara aykırıdır.
 
+## 🔄 Güncellemeler
 
-yeni eklemeler:
-- Her iki ipucu alındığında bir veri sızacak
-- ctrl + g tuşu ile otomatik doldur eklendi
-- 
+- İpucu sistemi güncellendi (Her 2 ipucu kullanımı 1 veri sızıntısına neden olur)
+- Ctrl + G ile görev otomatik doldurma özelliği eklendi
+- 5. görev yeniden düzenlendi ve iyileştirildi
+- Görev ilerleme çubuğu 0'dan başlayacak şekilde düzeltildi
