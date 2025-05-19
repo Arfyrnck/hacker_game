@@ -35,7 +35,7 @@ Gerçekçi bir hacker deneyimi sunan interaktif terminal simülasyonu. Kullanıc
 - **Yazı Tipi**: Fira Code (monospace)
 - **İkonlar**: Font Awesome
 - **Özellikler**:
-  - Responsive tasarım
+- Responsive tasarım
   - Otomatik komut tamamlama
   - Nano editör simülasyonu
   - Parola kırma animasyonu

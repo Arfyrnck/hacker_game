@@ -199,7 +199,67 @@
       transition: width 1s linear, background 0.3s ease;
       box-shadow: 0 0 10px var(--primary-color);
     }
-
+    #tasks {
+      position: fixed;
+      top: 260px;
+      right: 20px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid var(--primary-color);
+      padding: 8px 14px;
+      font-family: 'Fira Code', monospace;
+      font-size: 1em;
+      color: var(--primary-color);
+      z-index: 9999;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      width: 200px;
+    }
+    
+    .task-text {
+      font-size: 0.95em;
+      font-weight: bold;
+      text-align: center;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    .task-items {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .task-item {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--primary-color);
+      padding: 8px 12px;
+      border-radius: 3px;
+      font-size: 0.9em;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .task-number {
+      color: var(--warning-color);
+      font-weight: bold;
+      background: rgba(255, 255, 0, 0.1);
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--warning-color);
+      font-size: 0.85em;
+    }
+    
+    .task-content {
+      flex: 1;
+    }
+    
+    .task-item:hover {
+      background-color: rgba(0, 255, 0, 0.1);
+      cursor: pointer;
+    }
     .bluescreen {
       position: fixed;
       top: 0;
@@ -419,7 +479,7 @@
 
     .task-status {
       position: fixed;
-      bottom: 80px;
+      bottom: 430px;
       right: 20px;
       background: rgba(0, 0, 0, 0.8);
       border: 1px solid var(--primary-color);
@@ -496,6 +556,54 @@
       border-radius: 4px;
       width: 100%;
     }
+/* Panel kapsayıcı */
+#task-panel {
+  position: fixed;
+  bottom: 300px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--primary-color);
+  padding: 12px 16px;
+  font-family: 'Fira Code', monospace;
+  font-size: 1em;
+  color: var(--primary-color);
+  z-index: 9999;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(0, 255, 0, 0.2);
+  width: 200px;
+
+  display: flex;
+  flex-direction: column;   /* Sütuna çevir */
+  align-items: center;      /* Yatayda ortala */
+  gap: 6px;                 /* Buton ile metin arası boşluk */
+}
+
+/* İpucu butonu */
+.hint-button {
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  width: 100%;
+  padding: 8px 8px;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 1.2em;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.hint-button:hover {
+  background-color: rgba(0, 255, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Kırmızı uyarı metni */
+.leak-warning {
+  color: #ff4d4d;
+  font-size: 0.85em;
+  text-align: center;
+  margin: 0;   /* Fazla boşluğu kaldır */
+}
 
     .error-message {
       position: fixed;
@@ -551,7 +659,7 @@
 
     .hacked-profs {
       position: fixed;
-      bottom: 170px;
+      bottom: 80px;
       right: 20px;
       background: rgba(0, 0, 0, 0.8);
       border: 1px solid var(--primary-color);
@@ -692,6 +800,37 @@
       font-style: italic;
       font-size: 0.9em;
     }
+
+    .task-item {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--primary-color);
+      padding: 8px 12px;
+      border-radius: 3px;
+      font-size: 0.9em;
+      color: var(--primary-color);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .task-number {
+      color: var(--warning-color);
+      font-weight: bold;
+      background: rgba(255, 255, 0, 0.1);
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--warning-color);
+    }
+
+    .task-content {
+      flex: 1;
+    }
+
+    .task-item:hover {
+      background-color: rgba(0, 255, 0, 0.1);
+      cursor: pointer;
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -711,7 +850,14 @@
     </div>
   </div>
 </div>
-
+<div id="tasks">
+  <span class="task-text">Aktif Görev:</span>
+  <div class="task-items" id="taskItems">
+    <div class="task-item">
+      <span class="task-content">Sunucudan veri çek</span>
+    </div>
+  </div>
+</div>
 <div class="task-status">
   <div class="task-progress">
     <div class="progress-text">Görev İlerlemesi</div>
@@ -721,6 +867,12 @@
   </div>
   <div class="current-task">Görev 0/7</div>
 </div>
+
+<div id="task-panel">
+  <button class="hint-button">İpucu</button>
+  <p class="leak-warning">⚠️ Her iki ipucuda 1 veri sızdırılacak.</p>
+</div>
+
 
 <div class="hacked-profs">
   <div class="hacked-header">Hedef Kurbanlar</div>
@@ -739,7 +891,7 @@
 <div class="scanline"></div>
 <div class="command-history" id="commandHistory"></div>
 <div class="command-hints" id="commandHints"></div>
-<input type="text" id="command" placeholder="komut girin... (ipucu için: ipucu)" autocomplete="off" autofocus>
+<input type="text" id="command" placeholder="komut girin..." autocomplete="off" autofocus>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -1709,24 +1861,25 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (aktifGörev.editorMode) {
           showNanoEditor(aktifGörev.editorContent);
         } else {
-        const successDiv = document.createElement('div');
-        successDiv.innerHTML = aktifGörev.yanıt;
-        successDiv.className = 'success-text';
-        terminal.appendChild(successDiv);
+          const successDiv = document.createElement('div');
+          successDiv.innerHTML = aktifGörev.yanıt;
+          successDiv.className = 'success-text';
+          terminal.appendChild(successDiv);
 
-        const learnDiv = document.createElement('div');
-        learnDiv.innerHTML = `📘 Öğren: ${ogreticiNotlar[görevIndex]}`;
-        learnDiv.className = 'warning-text';
-        terminal.appendChild(learnDiv);
+          const learnDiv = document.createElement('div');
+          learnDiv.innerHTML = `📘 Öğren: ${ogreticiNotlar[görevIndex]}`;
+          learnDiv.className = 'warning-text';
+          terminal.appendChild(learnDiv);
 
-        görevIndex++;
+          görevIndex++;
+          updateTasks(); // Görev tamamlandığında görevleri güncelle
           updateTaskStatus();
-        
-        if (görevIndex < görevler.length) {
-          const nextTaskDiv = document.createElement('div');
-          nextTaskDiv.innerHTML = görevler[görevIndex].soru;
-          nextTaskDiv.className = 'task-container';
-          terminal.appendChild(nextTaskDiv);
+          
+          if (görevIndex < görevler.length) {
+            const nextTaskDiv = document.createElement('div');
+            nextTaskDiv.innerHTML = görevler[görevIndex].soru;
+            nextTaskDiv.className = 'task-container';
+            terminal.appendChild(nextTaskDiv);
           }
         }
       } else if (komut in extraKomutlar) {
@@ -1819,6 +1972,70 @@ document.addEventListener("DOMContentLoaded", function () {
       timerEl.style.color = "#00FF00";
     }
   }, 1000); // Run every 1000ms (1 second)
+
+  // Görev listesi
+  const taskList = [
+    "Sunucudan veri çek",
+    "Şifreli klasörü çöz",
+    "Log kayıtlarını sil",
+    "Ağ trafiğini analiz et",
+    "Güvenlik duvarını bypass et",
+    "Veritabanına sız",
+    "Sistem kontrolünü ele geçir"
+  ];
+
+  // Görevleri güncelleme fonksiyonu
+  function updateTasks() {
+    const taskItems = document.getElementById('taskItems');
+    if (görevIndex < taskList.length) {
+      taskItems.innerHTML = `
+        <div class="task-item">
+          <span class="task-content">${taskList[görevIndex]}</span>
+        </div>
+      `;
+    }
+  }
+
+  // Sayfa yüklendiğinde ilk görevi başlat
+  document.addEventListener("DOMContentLoaded", function() {
+    updateTasks();
+  });
+
+  // İpucu gösterme fonksiyonu
+  function showHint() {
+    if (typeof görevIndex !== 'undefined' && ogreticiNotlar[görevIndex]) {
+      // Her iki ipucuda bir veri sızdır
+      window.hintCount = (window.hintCount || 0) + 1;
+      if (window.hintCount % 2 === 0) {
+        veri--;
+        güncelleVeri();
+      }
+      const hintDiv = document.createElement('div');
+      hintDiv.className = 'warning-text';
+      hintDiv.innerHTML = `📌 İpucu: ${ogreticiNotlar[görevIndex]}`;
+      terminal.appendChild(hintDiv);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+  }
+
+  // İpucu butonuna tıklanınca
+  const hintButton = document.querySelector('.hint-button');
+  if (hintButton) {
+    hintButton.addEventListener('click', showHint);
+  }
+
+  // Terminal komutunda 'ipucu' girilirse
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const komut = input.value.trim().toLowerCase();
+      if (komut === 'ipucu') {
+        showHint();
+        input.value = "";
+        return;
+      }
+    }
+    // ... mevcut kod ...
+  });
 });
 </script>
 </body>
