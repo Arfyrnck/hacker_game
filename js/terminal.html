@@ -855,7 +855,7 @@
   <span class="task-text">Aktif Görev:</span>
   <div class="task-items" id="taskItems">
     <div class="task-item">
-      <span class="task-content">Sunucudan veri çek</span>
+      <span class="task-content">Yerel Ağa Sız</span>
     </div>
   </div>
 </div>
@@ -886,7 +886,7 @@
 </div>
 
 <div class="progress-bar" id="progress"></div>
-<div id="explosion">💥 PATLAMA! Süre dolmak üzere!</div>
+<div id="explosion">💥 Süren dolmak üzere, acele et!!</div>
 <div id="terminal"></div>
 <div class="matrix-overlay"></div>
 <div class="scanline"></div>
@@ -913,22 +913,19 @@ document.addEventListener("DOMContentLoaded", function () {
     commandHistory.innerHTML = '';
   }
 
+  // Gereksiz değişkenler kaldırıldı
   let görevIndex = 0;
   let veri = 5;
   let kalanSaniye = 10 * 60;
   let hızKatı = 1;
   let commandHistoryIndex = -1;
-  let commandHistoryList = []; // Her sayfa yüklendiğinde boş başlar
-  let score = 0;
-  
-  // Komut geçmişini temizle
-  commandHistoryList = [];
-  commandHistoryIndex = -1;
+  let commandHistoryList = [];
   let isEditorMode = false;
-  let currentEditorContent = '';
-  let currentCursorPosition = 0;
   let timerInterval;
-  let ipucuSayisi = 0;
+  // let score = 0; // kaldırıldı
+  // let ipucuSayisi = 0; // kaldırıldı
+  // let currentEditorContent = ''; // kaldırıldı
+  // let currentCursorPosition = 0; // kaldırıldı
 
   // Çoklu ipucu desteği için ogreticiNotlar'ı dizi dizisi yap
   const ogreticiNotlar = [
@@ -1059,7 +1056,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     {
       soru: ">> GÖREV #2: Yerel ağdaki cihazları tespit etmek için doğru Nmap komutunu gir.\n>> Komut: ________ -sn ______",
-      cevap: "nmap -sn 10.16.0.0/24",
+      cevap: "nmap -sn 10.16.23.48",
       yanıt: "Ağ taraması tamamlandı: 10.16.0.88 (t.timucin cihazı) bulundu.  [✔]"
     },
     {
@@ -1168,48 +1165,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   ];
 
+  // Kullanılmayan extraKomutlar'daki ipucu fonksiyonu kaldırıldı
   const extraKomutlar = {
-    "görevi tekrar et": () => görevler[görevIndex]?.soru || "Tüm görevler bitti.",
-    "ipucu": () => {
-      ipucuSayisi++;
-      if (ipucuSayisi % 2 === 0) {
-        veri--;
-        güncelleVeri();
-        return `📌 İpucu: ${ogreticiNotlar[görevIndex]}\n⚠️ Not: 2 ipucu aldığın için 1 veri sızdırıldı. Kalan veri: ${veri}`;
-      }
-      return `📌 İpucu: ${ogreticiNotlar[görevIndex]}\n⚠️ Not: Bir ipucu daha alırsan 1 veri sızdırılacak.`;
-    }
+    "görevi tekrar et": () => görevler[görevIndex]?.soru || "Tüm görevler bitti."
   };
 
-  // Komut ipuçları
-  const commandHints = {
-    'dhcp-discover': 'Ağ arayüzü üzerinden DHCP keşfi başlatır',
-    'nmap': 'Ağ tarama aracı',
-    'hydra': 'Parola kırma aracı',
-    'sshpass': 'SSH parola ile otomatik giriş',
-    'locate': 'Dosya arama komutu',
-    'nano': 'Metin editörü',
-    'ipucu': 'Mevcut görev için ipucu al',
-    'görevi tekrar et': 'Mevcut görevi tekrar göster'
-  };
+  // Kullanılmayan commandHints ve getCommandSuggestions kaldırıldı
+  // function getCommandSuggestions(input) { ... }
+  // const commandHints = { ... }
 
-  // Komut geçmişi yönetimi
-  function addToHistory(command) {
-    if (command && command !== commandHistoryList[0]) {
-      commandHistoryList.unshift(command);
-      if (commandHistoryList.length > 10) {
-        commandHistoryList.pop();
-      }
-      updateCommandHistory();
-    }
-  }
+  // Kullanılmayan addToHistory ve updateCommandHistory kaldırıldı
+  // function addToHistory(command) { ... }
+  // function updateCommandHistory() { ... }
 
-  function updateCommandHistory() {
-    const historyEl = document.getElementById('commandHistory');
-    historyEl.innerHTML = commandHistoryList
-      .map(cmd => `<div class="history-item">${cmd}</div>`)
-      .join('');
-  }
+  // Kullanılmayan showTooltip ve showAnimatedMessage kaldırıldı
+  // function showTooltip(element, text) { ... }
+  // function showAnimatedMessage(message, type = 'info') { ... }
 
   // Komut otomatik tamamlama
   function getCommandSuggestions(input) {
@@ -1535,7 +1506,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // Activate editor mode
     isEditorMode = true;
-    currentEditorContent = content;
     
     // Add editor styles
     const style = document.createElement('style');
@@ -1601,7 +1571,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Handle editor keyboard events
     editorContent.addEventListener('input', (e) => {
-      currentEditorContent = e.target.textContent;
+      // currentEditorContent = e.target.textContent;
     });
 
     editorContent.addEventListener('keydown', (e) => {
@@ -1616,12 +1586,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (e.key === 'x') {
           e.preventDefault();
           exitEditor();
-          const exitMsg = document.createElement('div');
-          exitMsg.className = 'success-text';
-          exitMsg.innerHTML = '✨ Editör kapatıldı. Değişiklikler kaydedildi.';
-          terminal.appendChild(exitMsg);
-          
-          // Show next task if available
+          // Görev ilerletme ve yeni görev ekleme sadece burada
           görevIndex++;
           updateTaskStatus();
           if (görevIndex < görevler.length) {
@@ -1651,19 +1616,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (editorDiv) {
       editorDiv.remove();
     }
-    
-    // Show success message for Task 6
+    // Sadece başarı mesajı göster
     const successDiv = document.createElement('div');
     successDiv.innerHTML = görevler[görevIndex].yanıt;
     successDiv.className = 'success-text';
     terminal.appendChild(successDiv);
-    
-    // Show Task 7 without incrementing görevIndex or updating progress
-    const nextTaskDiv = document.createElement('div');
-    nextTaskDiv.innerHTML = görevler[6].soru;
-    nextTaskDiv.className = 'task-container';
-    terminal.appendChild(nextTaskDiv);
-    
     terminal.scrollTop = terminal.scrollHeight;
   }
 
@@ -1731,11 +1688,6 @@ document.addEventListener("DOMContentLoaded", function () {
         successDiv.className = 'success-text';
         successDiv.innerHTML = 'Parola bulundu: Tunahan.123  [✔]';
         animationDiv.appendChild(successDiv);
-        
-        const learnDiv = document.createElement('div');
-        learnDiv.innerHTML = `📘 Öğren: ${ogreticiNotlar[görevIndex]}`;
-        learnDiv.className = 'warning-text';
-        animationDiv.appendChild(learnDiv);
         
         görevIndex++;
         updateTaskStatus();
@@ -1992,11 +1944,6 @@ document.addEventListener("DOMContentLoaded", function () {
           successDiv.className = 'success-text';
           terminal.appendChild(successDiv);
 
-          const learnDiv = document.createElement('div');
-          learnDiv.innerHTML = `📘 Öğren: ${ogreticiNotlar[görevIndex]}`;
-          learnDiv.className = 'warning-text';
-          terminal.appendChild(learnDiv);
-
           görevIndex++;
           updateTasks(); // Görev tamamlandığında görevleri güncelle
           updateTaskStatus();
@@ -2070,9 +2017,9 @@ document.addEventListener("DOMContentLoaded", function () {
     kalanSaniye -= hızKatı;
     if (kalanSaniye <= 0) {
       timerEl.textContent = "SÜRE BİTTİ";
-      terminal.innerHTML += "\n\n>> [!] Süre doldu. Görev başarısız.";
-      input.disabled = true;
       clearInterval(timerInterval); // Timer'ı durdur
+      gameOver(); // Mavi ekranı göster
+      input.disabled = true;
       return;
     }
 
@@ -2101,11 +2048,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Görev listesi
   const taskList = [
-    "Sunucudan veri çek",
-    "Şifreli klasörü çöz",
-    "Log kayıtlarını sil",
+    "Yerel Ağa Sız",
+    "Ağdaki Cihazları Tespit Et",
+    "Hedef Cihazda Oturum Aç",
     "Ağ trafiğini analiz et",
-    "Güvenlik duvarını bypass et",
+    "Sınav Dosyasını Bul ve Düzenle",
     "Veritabanına sız",
     "Sistem kontrolünü ele geçir"
   ];
@@ -2135,7 +2082,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { bar: '[███████.............] 45%', desc: 'DHCPOFFER yanıtı bekleniyor...' },
       { bar: '[████████████........] 75%', desc: 'Ağdan teklif toplanıyor...' },
       { bar: '[██████████████████...] 90%', desc: 'Yapılandırma uygulanıyor...' },
-      { bar: '[█████████████████████] 100%', desc: 'DHCP kiralama alındı! Ağa başarıyla sızıldı!' }
+      { bar: '[█████████████████████] 100%', desc: 'Adres Alındı:10.16.23.48 ! Ağa başarıyla sızıldı! ' }
     ];
     let i = 0;
     function nextFrame() {
@@ -2167,6 +2114,46 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
     nextFrame();
+  }
+
+  function gameOver() {
+    const bluescreen = document.createElement('div');
+    bluescreen.className = 'bluescreen';
+    bluescreen.innerHTML = `
+      <div class="bluescreen-content">
+        <div class="bluescreen-header">*** STOP: 0x000000D3 (SÜRE_DOLDU)</div>
+        <div class="bluescreen-body">
+          <p>Süre doldu! Görev başarısız!</p>
+          <p>Hacker tüm verilerinize erişti...</p>
+          <div class="bluescreen-progress">
+            <div class="bluescreen-progress-bar"></div>
+          </div>
+          <p class="bluescreen-footer">Sistem güvenliği ihlal edildi. Yeniden başlatılıyor...</p>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(bluescreen);
+
+    // Mavi ekran animasyonu
+    const progressBar = bluescreen.querySelector('.bluescreen-progress-bar');
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 1;
+      progressBar.style.width = `${progress}%`;
+      if (progress >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          document.body.style.backgroundColor = '#0000AA';
+          bluescreen.style.opacity = '0';
+          setTimeout(() => {
+            document.body.innerHTML = '<div class="bluescreen">Sistem yeniden başlatılıyor...</div>';
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          }, 1000);
+        }, 1000);
+      }
+    }, 50);
   }
 });
 </script>
