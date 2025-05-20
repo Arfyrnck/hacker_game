@@ -435,8 +435,9 @@
     }
 
     .terminal-text {
+      display: block;
+      white-space: normal;
       position: relative;
-      display: inline-block;
       text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
     }
 
@@ -929,15 +930,126 @@ document.addEventListener("DOMContentLoaded", function () {
   let timerInterval;
   let ipucuSayisi = 0;
 
+  // Çoklu ipucu desteği için ogreticiNotlar'ı dizi dizisi yap
   const ogreticiNotlar = [
-    "💡 DHCP komutu: 'dhcp-discover' ile başlar ve '--interface eth0' parametresi ile devam eder. Bu komut ağdaki DHCP sunucusundan IP adresi ister.",
-    "💡 Nmap ile ağ taraması yapmak için: 'nmap -sn [ağ_adresi]' formatını kullan. Örnek: nmap -sn 10.16.0.0/24",
-    "💡 Hydra ile parola kırmak için: 'hydra -l [kullanıcı] -P [wordlist] [servis]://[hedef]' formatını kullan.",
-    "💡 sshpass ile otomatik SSH bağlantısı için: 'sshpass -p [parola] ssh [kullanıcı]@[hedef]' formatını kullan.",
-    "💡 locate komutu ile dosya aramak için: 'locate [dosya_adı]' formatını kullan.",
-    "💡 nano editörü ile dosya düzenlemek için: 'nano [dosya_yolu]' formatını kullan. Kaydetmek için CTRL+O, çıkmak için CTRL+X",
-    "💡 Oturumu kapatmak için 'exit' komutunu kullan."
+    [
+      "💡 DHCP komutu: 'dhcp-discover' ile başlar ve '--interface eth0' parametresi ile devam eder.",
+      "💡 IP almak için: dhcp-discover --interface eth0 komutunu kullan.",
+      "💡 DHCP ile ağdan IP adresi almak için doğru interface'i belirtmelisin.",
+      "💡 Komutun sonunda interface adını (ör: eth0) doğru yazmalısın.",
+      "💡 DHCP komutunda tire ve parametreleri eksiksiz kullanmalısın."
+    ],
+    [
+      "💡 Nmap ile ağ taraması yapmak için: 'nmap -sn [ağ_adresi]' formatını kullan.",
+      "💡 Aktif cihazları bulmak için: nmap -sn 10.16.0.0/24",
+      "💡 Nmap ile ping scan için '-sn' parametresi kullanılır.",
+      "💡 Ağ adresini doğru yazdığından emin ol: 10.16.0.0/24",
+      "💡 Sadece canlı cihazları görmek için '-sn' parametresi gereklidir."
+    ],
+    [
+      "💡 Hydra ile parola kırmak için: 'hydra -l [kullanıcı] -P [wordlist] [servis]://[hedef]' formatını kullan.",
+      "💡 SSH brute force için: hydra -l t.timucin -P /usr/share/wordlists/deneneceksifreler.txt ssh://10.16.0.88",
+      "💡 Parola kırma işlemi için doğru kullanıcı ve wordlist dosyasını belirtmelisin.",
+      "💡 Komutta kullanıcı adı ve hedef IP adresi eksiksiz olmalı.",
+      "💡 Wordlist dosyasının tam yolunu yazmalısın."
+    ],
+    [
+      "💡 sshpass ile otomatik SSH bağlantısı için: 'sshpass -p [parola] ssh [kullanıcı]@[hedef]' formatını kullan.",
+      "💡 SSH bağlantısı için parola ve kullanıcıyı doğru gir.",
+      "💡 sshpass ile tek satırda parola ile SSH bağlantısı kurabilirsin.",
+      "💡 Parola parametresi '-p' ile verilmeli.",
+      "💡 SSH bağlantısında kullanıcı adı ve IP adresi '@' ile ayrılır."
+    ],
+    [
+      "💡 locate komutu ile dosya aramak için: 'locate [dosya_adı]' formatını kullan.",
+      "💡 Dosya bulmak için önce 'ls', sonra 'cd', sonra tekrar 'ls' ve 'nano' kullan.",
+      "💡 Sınav notları Documents dizininde olabilir.",
+      "💡 'cd' komutuyla doğru dizine geçmeden dosyayı açamazsın.",
+      "💡 Dosya adını küçük harflerle ve uzantısıyla birlikte yazmalısın."
+    ],
+    [
+      "💡 nano editörü ile dosya düzenlemek için: 'nano [dosya_yolu]' formatını kullan.",
+      "💡 Kaydetmek için CTRL+O, çıkmak için CTRL+X",
+      "💡 Editörde yön tuşlarıyla hareket edebilirsin.",
+      "💡 Dosya adını doğru yazmazsan nano açılmaz.",
+      "💡 nano editöründe değişiklikleri kaydetmeden çıkarsan düzenlemeler kaybolur."
+    ],
+    [
+      "💡 Oturumu kapatmak için 'exit' komutunu kullan.",
+      "💡 Log dosyalarını temizlemek için sed komutunu kullanabilirsin.",
+      "💡 Sadece t.timucin kayıtlarını silmek için: sed '/t.t.../d' /var/log/auth.log /var/log/secure",
+      "💡 sed komutunda arama desenini doğru yazmalısın.",
+      "💡 Birden fazla log dosyasını aynı anda sed ile işleyebilirsin."
+    ]
   ];
+
+  // Her görev için gösterilen ipuçlarını takip et
+  const shownHints = {};
+
+  // Ortak ipucu gösterme fonksiyonu
+  function showHint() {
+    if (typeof görevIndex !== 'undefined' && ogreticiNotlar[görevIndex]) {
+      // Görev için gösterilen ipuçlarını al
+      if (!shownHints[görevIndex]) shownHints[görevIndex] = [];
+      const allHints = ogreticiNotlar[görevIndex];
+      const shown = shownHints[görevIndex];
+      // Gösterilmeyen ipuçlarını bul
+      const notShown = allHints.filter(h => !shown.includes(h));
+      let hintMsg = '';
+      if (notShown.length === 0) {
+        hintMsg = 'Tüm ipuçları gösterildi.';
+      } else {
+        // Rastgele bir ipucu seç
+        const idx = Math.floor(Math.random() * notShown.length);
+        hintMsg = notShown[idx];
+        shown.push(hintMsg);
+      }
+      // Veri sızdırma mantığı
+      window.hintCount = (window.hintCount || 0) + 1;
+      let dataLeaked = false;
+      if (window.hintCount % 2 === 0) {
+        veri--;
+        güncelleVeri();
+        dataLeaked = true;
+      }
+      // Terminale ipucu yaz
+      const hintDiv = document.createElement('div');
+      hintDiv.className = 'warning-text';
+      hintDiv.innerHTML = `📌 İpucu: ${hintMsg}`;
+      terminal.appendChild(hintDiv);
+      if (dataLeaked) {
+        const leakDiv = document.createElement('div');
+        leakDiv.className = 'error-text';
+        leakDiv.innerHTML = `Veri sızdırıldı. Kalan veri: ${veri}`;
+        terminal.appendChild(leakDiv);
+        if (veri <= 0) {
+          maviEkran();
+          input.disabled = true;
+          return;
+        }
+      }
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+  }
+
+  // İpucu butonuna tıklanınca
+  const hintButton = document.querySelector('.hint-button');
+  if (hintButton) {
+    hintButton.addEventListener('click', showHint);
+  }
+
+  // Terminal komutunda 'ipucu' girilirse
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const komut = input.value.trim().toLowerCase();
+      if (komut === 'ipucu') {
+        showHint();
+        input.value = "";
+        return;
+      }
+    }
+    // ... mevcut kod ...
+  });
 
   const görevler = [
     {
@@ -1856,7 +1968,21 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       
       if (aktifGörev && komut === aktifGörev.cevap.toLowerCase()) {
-        if (aktifGörev.showPasswordCracking) {
+        if (görevIndex === 0) {
+          // Görev 1 için özel animasyon
+          showNetworkBreachAnimation(function() {
+            görevIndex++;
+            updateTasks();
+            updateTaskStatus();
+            // Görev 2'yi terminale ekle
+            if (görevIndex < görevler.length) {
+              const nextTaskDiv = document.createElement('div');
+              nextTaskDiv.innerHTML = görevler[görevIndex].soru;
+              nextTaskDiv.className = 'task-container';
+              terminal.appendChild(nextTaskDiv);
+            }
+          });
+        } else if (aktifGörev.showPasswordCracking) {
           showPasswordCrackingAnimation();
         } else if (aktifGörev.editorMode) {
           showNanoEditor(aktifGörev.editorContent);
@@ -2001,41 +2127,47 @@ document.addEventListener("DOMContentLoaded", function () {
     updateTasks();
   });
 
-  // İpucu gösterme fonksiyonu
-  function showHint() {
-    if (typeof görevIndex !== 'undefined' && ogreticiNotlar[görevIndex]) {
-      // Her iki ipucuda bir veri sızdır
-      window.hintCount = (window.hintCount || 0) + 1;
-      if (window.hintCount % 2 === 0) {
-        veri--;
-        güncelleVeri();
-      }
-      const hintDiv = document.createElement('div');
-      hintDiv.className = 'warning-text';
-      hintDiv.innerHTML = `📌 İpucu: ${ogreticiNotlar[görevIndex]}`;
-      terminal.appendChild(hintDiv);
-      terminal.scrollTop = terminal.scrollHeight;
-    }
-  }
+  // Görev 1 için bar üstte, açıklama altta animasyon
+  function showNetworkBreachAnimation(callback) {
+    const steps = [
+      { bar: '[█...................] 5%', desc: 'Ağ taraması başlatılıyor...' },
+      { bar: '[███.................] 20%', desc: 'DHCPDISCOVER paketi gönderiliyor...' },
+      { bar: '[███████.............] 45%', desc: 'DHCPOFFER yanıtı bekleniyor...' },
+      { bar: '[████████████........] 75%', desc: 'Ağdan teklif toplanıyor...' },
+      { bar: '[██████████████████...] 90%', desc: 'Yapılandırma uygulanıyor...' },
+      { bar: '[█████████████████████] 100%', desc: 'DHCP kiralama alındı! Ağa başarıyla sızıldı!' }
+    ];
+    let i = 0;
+    function nextFrame() {
+      if (i < steps.length) {
+        // Bar satırı
+        const barDiv = document.createElement('div');
+        barDiv.className = 'terminal-text';
+        barDiv.textContent = steps[i].bar;
+        barDiv.style.color = (i === steps.length - 1) ? '#0f0' : '#0ff';
+        barDiv.style.fontWeight = 'bold';
 
-  // İpucu butonuna tıklanınca
-  const hintButton = document.querySelector('.hint-button');
-  if (hintButton) {
-    hintButton.addEventListener('click', showHint);
-  }
+        // Açıklama satırı
+        const descDiv = document.createElement('div');
+        descDiv.className = 'terminal-text';
+        descDiv.textContent = steps[i].desc;
+        descDiv.style.color = (i === steps.length - 1) ? '#0f0' : '#fff';
+        descDiv.style.fontWeight = (i === steps.length - 1) ? 'bold' : 'normal';
+        descDiv.style.fontSize = (i === steps.length - 1) ? '1.2em' : '';
+        descDiv.style.textShadow = (i === steps.length - 1) ? '0 0 10px #0f0, 0 0 20px #0ff' : '';
+        descDiv.style.animation = (i === steps.length - 1) ? 'glowAnim 1.2s infinite alternate' : '';
 
-  // Terminal komutunda 'ipucu' girilirse
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      const komut = input.value.trim().toLowerCase();
-      if (komut === 'ipucu') {
-        showHint();
-        input.value = "";
-        return;
+        terminal.appendChild(barDiv);
+        terminal.appendChild(descDiv);
+        terminal.scrollTop = terminal.scrollHeight;
+        i++;
+        setTimeout(nextFrame, 900);
+      } else if (typeof callback === 'function') {
+        setTimeout(callback, 900);
       }
     }
-    // ... mevcut kod ...
-  });
+    nextFrame();
+  }
 });
 </script>
 </body>
