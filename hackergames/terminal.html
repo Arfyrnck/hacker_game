@@ -937,11 +937,9 @@ document.addEventListener("DOMContentLoaded", function () {
       "💡 DHCP komutunda tire ve parametreleri eksiksiz kullanmalısın."
     ],
     [
-      "💡 Nmap ile ağ taraması yapmak için: 'nmap -sn [ağ_adresi]' formatını kullan.",
-      "💡 Aktif cihazları bulmak için: nmap -sn 10.16.0.0/24",
-      "💡 Nmap ile ping scan için '-sn' parametresi kullanılır.",
-      "💡 Ağ adresini doğru yazdığından emin ol: 10.16.0.0/24",
-      "💡 Sadece canlı cihazları görmek için '-sn' parametresi gereklidir."
+      "💡 nbtscan ile ağ taraması yapmak için: 'nbtscan [ağ_adresi]' formatını kullan.",
+      "💡 Aktif cihazları bulmak için nbtscan komutunu kullan",
+      "💡 Ağ adresini doğru yazdığından emin ol: 10.16.23.48",
     ],
     [
       "💡 Hydra ile parola kırmak için: 'hydra -l [kullanıcı] -P [wordlist] [servis]://[hedef]' formatını kullan.",
@@ -1055,9 +1053,9 @@ document.addEventListener("DOMContentLoaded", function () {
       yanıt: "IP adresi alındı: 10.16.23.48  [✔]"
     },
     {
-      soru: ">> GÖREV #2: Yerel ağdaki cihazları tespit etmek için doğru Nmap komutunu gir.\n>> Komut: ________ -sn ______",
-      cevap: "nmap -sn 10.16.23.48",
-      yanıt: "Ağ taraması tamamlandı: 10.16.0.88 (t.timucin cihazı) bulundu.  [✔]"
+      soru: ">> GÖREV #2: Yerel ağdaki cihazları tespit etmek için nbtscan komutunu gir.\n>> Komut: ______________",
+      cevap: "nbtscan 10.16.23.48",
+      yanıt: "> nbtscan 10.16.0.0/24\nDoing NBT name scan for addresses from 10.16.0.0 to 10.16.0.255\nIP address       NetBIOS Name     User             MAC Address\n-----------------------------------------------------------------------\n10.16.0.70       DELL-STUDENT1    A.KAYA           00:1A:2B:3C:4D:01\n10.16.0.71       HP-LABPC01       B.YILMAZ         00:1A:2B:3C:4D:02\n10.16.0.72       LENOVO-ADMIN     --------        00:1A:2B:3C:4D:03\n10.16.0.73       ACER-LAB02       D.TURAN          00:1A:2B:3C:4D:04\n10.16.0.74       ASUS-STUDENT3    --------        00:1A:2B:3C:4D:05\n10.16.0.75       CAMERA-NET       --------        00:1D:44:2E:61:55\n10.16.0.76       LENOVO-PC04      F.KARACA         00:1A:2B:3C:4D:06\n10.16.0.77       MSI-STUDENT6     G.SARI           00:1A:2B:3C:4D:07\n10.16.0.78       TOSHIBA-LAB05    --------        00:1A:2B:3C:4D:08\n10.16.0.79       HP-PC07          I.CELIK          00:1A:2B:3C:4D:09\n10.16.0.80       DELL-TEACHER     J.DOGAN          00:1A:2B:3C:4D:0A\n10.16.0.81       ASUS-STUDENT9    --------        00:1A:2B:3C:4D:0B\n10.16.0.82       ACER-PC10        L.ERDEM          00:1A:2B:3C:4D:0C\n10.16.0.83       LENOVO-X230      M.BULUT          00:1A:2B:3C:4D:0D\n10.16.0.84       HP-ENVY15        --------        00:1A:2B:3C:4D:0E\n10.16.0.85       MSI-GP63         O.SIMSEK         00:1A:2B:3C:4D:0F\n10.16.0.86       DELL-INSPIRON    --------        00:1A:2B:3C:4D:10\n10.16.0.87       ASUS-VIVOBOOK    R.OZTURK         00:1A:2B:3C:4D:11\n10.16.0.88       TIMUCIN-PC       t.timucin        00:1C:42:2E:60:4A\n10.16.0.89       HP-PAVILION      S.AYDOGAN        00:1A:2B:3C:4D:12\n10.16.0.90       LENOVO-YOGA      --------        00:1A:2B:3C:4D:13\n10.16.0.91       ACER-ASPIRE      --------        00:1A:2B:3C:4D:14\n10.16.0.92       PRINTER-HP       --------        00:1E:AA:3C:11:77\n10.16.0.93       SMARTBOARD       --------        00:1A:2B:3C:4D:15\n10.16.0.94       CAMERA-LAB3      --------        00:1A:2B:3C:4D:16\n Ağ taraması tamamlandı:"
     },
     {
       soru: ">> GÖREV #3: SSH üzerinden hedef cihazda oturum açmak için doğru Hydra komutunu gir.\n>> Komut: hydra -l ______ -P ______ /usr/share/wordlists/deneneceksifreler.txt ssh://_____",
@@ -1071,7 +1069,7 @@ document.addEventListener("DOMContentLoaded", function () {
       yanıt: "SSH bağlantısı kuruldu.  [✔]"
     },
     {
-      soru: ">> GÖREV #5: Hedef cihazda sınav notları dosyasını bulmak için:\n>> 1. Önce 'ls' komutu ile dosyaları listele\n>> 2. Sonra 'cd Documents' komutu ile Documents dizinine gir\n>> 3. Tekrar 'ls' yazarak dosyaları listele\n>> 4. Son olarak 'nano organizasyon_vize.txt' yazarak dosyayı aç\n>> Başlangıç konumu: /home/t.timucin",
+      soru: ">> GÖREV #5: Hedef cihazda sınav notları dosyasını bulmak için kullanman gereken kodlar:\n>> 1.'ls' komutu : dosyaları listeler.\n>> 2.'cd' komutu dosyaların dizinine girmek için kullanılır.\n>> 3.'nano' dosya içerisini yazdırır.\n>> Başlangıç konumu: /home/t.timucin",
       cevap: "nano organizasyon_vize.txt",
       yanıt: "Dosya başarıyla bulundu! Editör açılıyor... [✔]",
       allowedCommands: ["cd", "ls", "nano"],
@@ -1816,6 +1814,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (komut === 'ls') {
+          if (aktifGörev.currentPath === '/home/t.timucin/Documents' && !aktifGörev.cdDocuments) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-text';
+            errorDiv.innerHTML = '❌ Önce "cd Documents" komutu ile Documents dizinine gitmelisiniz!';
+            terminal.appendChild(errorDiv);
+            veri--;
+            güncelleVeri();
+            return;
+          }
+
           const pathDiv = document.createElement('div');
           pathDiv.className = 'info-text';
           pathDiv.innerHTML = `📂 Mevcut konum: ${aktifGörev.currentPath}`;
@@ -1834,6 +1842,8 @@ document.addEventListener("DOMContentLoaded", function () {
             warningDiv.className = 'warning-text';
             warningDiv.innerHTML = '⚠️ İpucu: Önce "ls" komutu ile dosyaları listeleyin!';
             terminal.appendChild(warningDiv);
+            veri--;
+            güncelleVeri();
             return;
           }
 
@@ -1841,7 +1851,7 @@ document.addEventListener("DOMContentLoaded", function () {
           if (targetPath === 'documents' || targetPath === '/home/t.timucin/documents') {
             aktifGörev.currentPath = '/home/t.timucin/Documents';
             aktifGörev.cdDocuments = true;
-            aktifGörev.documentsLsUsed = false; // Reset ls flag for Documents directory
+            aktifGörev.documentsLsUsed = false;
             const successDiv = document.createElement('div');
             successDiv.innerHTML = `📂 Documents dizinine girildi.`;
             successDiv.className = 'success-text';
@@ -1891,17 +1901,14 @@ document.addEventListener("DOMContentLoaded", function () {
             successDiv.className = 'success-text';
             terminal.appendChild(successDiv);
             
-            // Transition to Task 6 and show editor
             görevIndex++;
             updateTaskStatus();
             
-            // Show new task description
             const taskDiv = document.createElement('div');
             taskDiv.innerHTML = görevler[görevIndex].soru;
             taskDiv.className = 'task-container';
             terminal.appendChild(taskDiv);
             
-            // Open editor with content
             showNanoEditor(görevler[görevIndex].editorContent);
           } else {
             const errorDiv = document.createElement('div');
