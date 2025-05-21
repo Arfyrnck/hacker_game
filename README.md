@@ -1,7 +1,8 @@
 # 🎮 Hacker Games - Siber Güvenlik Simülasyonu
 
 ## 📖 Hikaye
-Düzce Üniversitesi'nin bilgi sistemlerine sızan bir hacker, öğrenci notlarını değiştirmeye çalışmaktadır. Siz, üniversitenin siber güvenlik ekibinin bir üyesisiniz ve bu saldırıyı durdurmak için görevlendirildiniz. 10 dakika içinde hacker'ı durdurmanız ve sistemleri güvenli hale getirmeniz gerekiyor. Her yanlış hamlenizde bir veri sızdırılacak ve tüm verileriniz sızdığında oyun sona erecek.
+Düzce Üniversitesi'nde Bilgisayar Organizasyonu sınavından düşük alan 6 öğrencinin T. Timuçin adlı hocanın bilgisayarına girmesinin hikayesi işlenmekte. Bu arkadaşlarımız final sınavına çalışmak yerine hocanın bilgisayarından sınav sonuçlarını değiştirmeye karar verir ama problemleri şudur ki yakalanma ihtimaline karşılık bir kurban seçerler ve kurbanın verilerini yayma ile tehdit ederek oyunumuz başlar. 
+Kurban olan siz, alışveriş yapmak için girdiğiniz bir sitede hackleniyorsunuz. Sizi hackleyen kişiler size bazı görevler veriyorlar. Eğer bu görevleri zamanında tamamlayamazsan tüm bilgilerin yayılacak. Peki bu kadar deneyimli misin? Sana verilen görevleri yapacak mısın yoksa tüm bilgilerinin yayılmasına izin mi vereceksin? TERCİH SENİN!
 
 ## 📝 Proje Hakkında
 Bu proje, siber güvenlik kavramlarını öğrenmek ve pratik yapmak için tasarlanmış interaktif bir web tabanlı simülasyon oyunudur. Kullanıcılar, gerçek dünya senaryolarına dayalı görevleri tamamlayarak siber güvenlik becerilerini geliştirebilirler.
@@ -20,7 +21,7 @@ Bu proje, siber güvenlik kavramlarını öğrenmek ve pratik yapmak için tasar
 
 ## 🎮 Oyun Mekanikleri
 - **Süre**: 10 dakika
-- **Başlangıç Veri Sayısı**: 5 (WhatsApp, Instagram, Galeri, Rehber, Banka)
+- **Başlangıç Veri Sayısı: 5 (WhatsApp, Instagram, Galeri, Rehber, Banka)
 - **Veri Kaybı Koşulları**:
   - Her yanlış komut: -1 veri
   - Her 2 ipucu kullanımı: -1 veri
@@ -28,20 +29,6 @@ Bu proje, siber güvenlik kavramlarını öğrenmek ve pratik yapmak için tasar
   - Tüm verilerin sızması
   - Sürenin dolması
   - Tüm görevlerin başarıyla tamamlanması
-
-## 🚀 Başlangıç
-1. Projeyi klonlayın:
-```bash
-git clone https://github.com/kullanici/hacker-games.git
-```
-
-2. Proje dizinine gidin:
-```bash
-cd hacker-games
-```
-
-3. `index.html` dosyasını bir web tarayıcısında açın.
-4. Tam ekran (F11) modunda oynamanız önerilir.
 
 ## 🎮 Oyun İçeriği
 
