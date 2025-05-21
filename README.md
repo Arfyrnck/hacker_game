@@ -8,7 +8,7 @@ Kurban olan siz, alışveriş yapmak için girdiğiniz bir sitede hackleniyorsun
 Bu proje, siber güvenlik kavramlarını öğrenmek ve pratik yapmak için tasarlanmış interaktif bir web tabanlı simülasyon oyunudur. Kullanıcılar, gerçek dünya senaryolarına dayalı görevleri tamamlayarak siber güvenlik becerilerini geliştirebilirler.
 
 ## 🎯 Özellikler
-- 🕹️ 7 farklı görev ve senaryo
+- 🕹️ 7 farklı görev 
 - ⏱️ Gerçek zamanlı süre takibi (10 dakika)
 - 📊 İlerleme göstergesi
 - 💾 Veri sızıntısı simülasyonu (5 kritik veri)
