@@ -1055,16 +1055,17 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       soru: ">> GÖREV #2: Yerel ağdaki cihazları tespit etmek için nbtscan komutunu gir.\n>> Komut: ______________",
       cevap: "nbtscan 10.16.23.48",
-      yanıt: "> nbtscan 10.16.0.0/24\nDoing NBT name scan for addresses from 10.16.0.0 to 10.16.0.255\nIP address       NetBIOS Name     User             MAC Address\n-----------------------------------------------------------------------\n10.16.0.70       DELL-STUDENT1    A.KAYA           00:1A:2B:3C:4D:01\n10.16.0.71       HP-LABPC01       B.YILMAZ         00:1A:2B:3C:4D:02\n10.16.0.72       LENOVO-ADMIN     --------        00:1A:2B:3C:4D:03\n10.16.0.73       ACER-LAB02       D.TURAN          00:1A:2B:3C:4D:04\n10.16.0.74       ASUS-STUDENT3    --------        00:1A:2B:3C:4D:05\n10.16.0.75       CAMERA-NET       --------        00:1D:44:2E:61:55\n10.16.0.76       LENOVO-PC04      F.KARACA         00:1A:2B:3C:4D:06\n10.16.0.77       MSI-STUDENT6     G.SARI           00:1A:2B:3C:4D:07\n10.16.0.78       TOSHIBA-LAB05    --------        00:1A:2B:3C:4D:08\n10.16.0.79       HP-PC07          I.CELIK          00:1A:2B:3C:4D:09\n10.16.0.80       DELL-TEACHER     J.DOGAN          00:1A:2B:3C:4D:0A\n10.16.0.81       ASUS-STUDENT9    --------        00:1A:2B:3C:4D:0B\n10.16.0.82       ACER-PC10        L.ERDEM          00:1A:2B:3C:4D:0C\n10.16.0.83       LENOVO-X230      M.BULUT          00:1A:2B:3C:4D:0D\n10.16.0.84       HP-ENVY15        --------        00:1A:2B:3C:4D:0E\n10.16.0.85       MSI-GP63         O.SIMSEK         00:1A:2B:3C:4D:0F\n10.16.0.86       DELL-INSPIRON    --------        00:1A:2B:3C:4D:10\n10.16.0.87       ASUS-VIVOBOOK    R.OZTURK         00:1A:2B:3C:4D:11\n10.16.0.88       TIMUCIN-PC       t.timucin        00:1C:42:2E:60:4A\n10.16.0.89       HP-PAVILION      S.AYDOGAN        00:1A:2B:3C:4D:12\n10.16.0.90       LENOVO-YOGA      --------        00:1A:2B:3C:4D:13\n10.16.0.91       ACER-ASPIRE      --------        00:1A:2B:3C:4D:14\n10.16.0.92       PRINTER-HP       --------        00:1E:AA:3C:11:77\n10.16.0.93       SMARTBOARD       --------        00:1A:2B:3C:4D:15\n10.16.0.94       CAMERA-LAB3      --------        00:1A:2B:3C:4D:16\n Ağ taraması tamamlandı:"
+      yanıt: `> nbtscan 10.16.0.0/24\nDoing NBT name scan for addresses from 10.16.0.0 to 10.16.0.255\n\n<pre>+---------------+-----------------+---------------+-------------------+\n| IP Address    | NetBIOS Name    | User          | MAC Address       |\n+---------------+-----------------+---------------+-------------------+\n| 10.16.0.70    | DELL-STUDENT1   | A.KAYA        | 00:1A:2B:3C:4D:01 |\n| 10.16.0.71    | HP-LABPC01      | B.YILMAZ      | 00:1A:2B:3C:4D:02 |\n| 10.16.0.72    | LENOVO-ADMIN    | --------      | 00:1A:2B:3C:4D:03 |\n| 10.16.0.73    | ACER-LAB02      | D.TURAN       | 00:1A:2B:3C:4D:04 |\n| 10.16.0.74    | ASUS-STUDENT3   | --------      | 00:1A:2B:3C:4D:05 |\n| 10.16.0.75    | CAMERA-NET      | --------      | 00:1D:44:2E:61:55 |\n| 10.16.0.76    | LENOVO-PC04     | F.KARACA      | 00:1A:2B:3C:4D:06 |\n| 10.16.0.77    | MSI-STUDENT6    | G.SARI        | 00:1A:2B:3C:4D:07 |\n| 10.16.0.78    | TOSHIBA-LAB05   | --------      | 00:1A:2B:3C:4D:08 |\n| 10.16.0.79    | HP-PC07         | I.CELIK       | 00:1A:2B:3C:4D:09 |\n| 10.16.0.80    | DELL-TEACHER    | J.DOGAN       | 00:1A:2B:3C:4D:0A |\n| 10.16.0.81    | ASUS-STUDENT9   | --------      | 00:1A:2B:3C:4D:0B |\n| 10.16.0.82    | ACER-PC10       | L.ERDEM       | 00:1A:2B:3C:4D:0C |\n| 10.16.0.83    | LENOVO-X230     | M.BULUT       | 00:1A:2B:3C:4D:0D |\n| 10.16.0.84    | HP-ENVY15       | --------      | 00:1A:2B:3C:4D:0E |\n| 10.16.0.85    | MSI-GP63        | O.SIMSEK      | 00:1A:2B:3C:4D:0F |\n| 10.16.0.86    | DELL-INSPIRON   | --------      | 00:1A:2B:3C:4D:10 |\n| 10.16.0.87    | ASUS-VIVOBOOK   | R.OZTURK      | 00:1A:2B:3C:4D:11 |\n| 10.16.0.88    | TIMUCIN-PC      | t.timucin     | 00:1C:42:2E:60:4A |\n| 10.16.0.89    | HP-PAVILION     | S.AYDOGAN     | 00:1A:2B:3C:4D:12 |\n| 10.16.0.90    | LENOVO-YOGA     | --------      | 00:1A:2B:3C:4D:13 |\n| 10.16.0.91    | ACER-ASPIRE     | --------      | 00:1A:2B:3C:4D:14 |\n| 10.16.0.92    | PRINTER-HP      | --------      | 00:1E:AA:3C:11:77 |\n| 10.16.0.93    | SMARTBOARD      | --------      | 00:1A:2B:3C:4D:15 |\n| 10.16.0.94    | CAMERA-LAB3     | --------      | 00:1A:2B:3C:4D:16 |\n+---------------+-----------------+---------------+-------------------+</pre>\n\nAğ taraması tamamlandı:`,
+      showPasswordCracking: true
     },
     {
-      soru: ">> GÖREV #3: SSH üzerinden hedef cihazda oturum açmak için doğru Hydra komutunu gir.\n>> Komut: hydra -l ______ -P ______ /usr/share/wordlists/deneneceksifreler.txt ssh://_____",
+      soru: ">> GÖREV #3: SSH üzerinden hedef cihazda oturum açmak için doğru Hydra komutunu gir.\n>> Komut: hydra -l ______ -P /usr/share/wordlists/deneneceksifreler.txt ssh://_____",
       cevap: "hydra -l t.timucin -P /usr/share/wordlists/deneneceksifreler.txt ssh://10.16.0.88",
       yanıt: "Parola bulundu: Tunahan.123  [✔]",
       showPasswordCracking: true
     },
     {
-      soru: ">> GÖREV #4: Hedef cihazda SSH ile oturum açmak için sshpass kullanarak tek komutta bağlanın.\n>> Komut: ______",
+      soru: ">> GÖREV #4: Hedef cihazda SSH ile oturum açmak için sshpass kullanarak tek komutta bağlanın.\n>> Komut:sshpass -p ______ ssh ______ @10.16.0.88 ",
       cevap: "sshpass -p Tunahan.123 ssh t.timucin@10.16.0.88",
       yanıt: "SSH bağlantısı kuruldu.  [✔]"
     },
@@ -1157,7 +1158,7 @@ document.addEventListener("DOMContentLoaded", function () {
       editorMode: true
     },
     {
-      soru: ">> GÖREV #7: Hedef cihazdaki sadece t.timucin oturum kayıtlarını log dosyalarından silmek için doğru komutu gir.\n>> Komut: sed ________ ________ ________",
+      soru: ">> GÖREV #7: Hedef cihazdaki sadece t.timucin oturum kayıtlarını log dosyalarından silmek için doğru komutu gir.\n>> Komut: sed ________ /var/log/auth.log ________",
       cevap: "sed '/t\\.timucin/d' /var/log/auth.log /var/log/secure",
       yanıt: "Yalnızca 't.timucin' kayıtları silindi; diğer loglar dokunulmadı.  [✔]"
     }
@@ -1941,6 +1942,25 @@ document.addEventListener("DOMContentLoaded", function () {
               terminal.appendChild(nextTaskDiv);
             }
           });
+        } else if (görevIndex === 1) {
+          // Görev 2 için özel animasyon
+          showNetworkScanAnimation(function() {
+            const resultDiv = document.createElement('div');
+            resultDiv.className = 'terminal-text';
+            resultDiv.innerHTML = görevler[görevIndex].yanıt;
+            terminal.appendChild(resultDiv);
+            
+            görevIndex++;
+            updateTasks();
+            updateTaskStatus();
+            
+            if (görevIndex < görevler.length) {
+              const nextTaskDiv = document.createElement('div');
+              nextTaskDiv.innerHTML = görevler[görevIndex].soru;
+              nextTaskDiv.className = 'task-container';
+              terminal.appendChild(nextTaskDiv);
+            }
+          });
         } else if (aktifGörev.showPasswordCracking) {
           showPasswordCrackingAnimation();
         } else if (aktifGörev.editorMode) {
@@ -2161,6 +2181,53 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000);
       }
     }, 50);
+  }
+
+  function showNetworkScanAnimation(callback) {
+    const steps = [
+      { bar: '[█...................] 5%', desc: 'Ağ taraması başlatılıyor...' },
+      { bar: '[███.................] 15%', desc: 'NBT taraması başlatıldı...' },
+      { bar: '[█████...............] 25%', desc: '10.16.0.0/24 ağı taranıyor...' },
+      { bar: '[███████.............] 35%', desc: 'Cihazlar tespit ediliyor...' },
+      { bar: '[█████████...........] 45%', desc: 'NetBIOS isimleri çözümleniyor...' },
+      { bar: '[███████████.........] 55%', desc: 'MAC adresleri toplanıyor...' },
+      { bar: '[█████████████.......] 65%', desc: 'Kullanıcı bilgileri alınıyor...' },
+      { bar: '[███████████████.....] 75%', desc: 'Ağ topolojisi oluşturuluyor...' },
+      { bar: '[█████████████████...] 85%', desc: 'Sonuçlar formatlanıyor...' },
+      { bar: '[███████████████████.] 95%', desc: 'Tarama tamamlanıyor...' },
+      { bar: '[████████████████████] 100%', desc: 'Ağ taraması tamamlandı!' }
+    ];
+
+    let i = 0;
+    function nextFrame() {
+      if (i < steps.length) {
+        // Bar satırı
+        const barDiv = document.createElement('div');
+        barDiv.className = 'terminal-text';
+        barDiv.textContent = steps[i].bar;
+        barDiv.style.color = (i === steps.length - 1) ? '#0f0' : '#0ff';
+        barDiv.style.fontWeight = 'bold';
+
+        // Açıklama satırı
+        const descDiv = document.createElement('div');
+        descDiv.className = 'terminal-text';
+        descDiv.textContent = steps[i].desc;
+        descDiv.style.color = (i === steps.length - 1) ? '#0f0' : '#fff';
+        descDiv.style.fontWeight = (i === steps.length - 1) ? 'bold' : 'normal';
+        descDiv.style.fontSize = (i === steps.length - 1) ? '1.2em' : '';
+        descDiv.style.textShadow = (i === steps.length - 1) ? '0 0 10px #0f0, 0 0 20px #0ff' : '';
+        descDiv.style.animation = (i === steps.length - 1) ? 'glowAnim 1.2s infinite alternate' : '';
+
+        terminal.appendChild(barDiv);
+        terminal.appendChild(descDiv);
+        terminal.scrollTop = terminal.scrollHeight;
+        i++;
+        setTimeout(nextFrame, 800);
+      } else if (typeof callback === 'function') {
+        setTimeout(callback, 800);
+      }
+    }
+    nextFrame();
   }
 });
 </script>
